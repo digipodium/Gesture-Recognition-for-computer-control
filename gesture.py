@@ -3,6 +3,7 @@ import numpy as np
 import pyautogui
 
 cap=cv2.VideoCapture(0)
+font = cv2.FONT_HERSHEY_SIMPLEX
 yellow_lower = np.array([20, 100, 100])
 yellow_upper = np.array([30, 255, 255])
 upper_limit=200
@@ -19,6 +20,11 @@ while True:
     frame = cv2.line(frame,(0,298),(640,298),(0,255,0),4)
     frame = cv2.line(frame,(218,0),(218,480),(255,255,255),4)
     frame = cv2.line(frame,(368+50,0),(368+50,480),(0,0,0),4)
+    cv2.putText(frame,'Space',(50, 50),font, 1,(0, 255, 255),2, cv2.LINE_4)
+    cv2.putText(frame,'Up',(250, 50),font, 1,(0, 255, 255),2, cv2.LINE_4)
+    cv2.putText(frame,'right',(50, 250),font, 1,(0, 255, 255),2, cv2.LINE_4)
+    cv2.putText(frame,'down',(250, 350),font, 1,(0, 255, 255),2, cv2.LINE_4)
+    cv2.putText(frame,'left',(450, 250),font, 1,(0, 255, 255),2, cv2.LINE_4)
     for c in contours:
         area=cv2.contourArea(c)
         if area>300:
@@ -42,14 +48,15 @@ while True:
                     actions['down']=True
                     print(actions)
             elif y>upper_limit and y<lower_limit and x<left_limit:
-                if actions.get('left')==False:
-                    pyautogui.press('left')
-                    actions['left']=True
-                    print(actions)
-            elif y>upper_limit and y<lower_limit and x>right_limit:
                 if actions.get('right')==False:
                     pyautogui.press('right')
                     actions['right']=True
+                    print(actions)
+                
+            elif y>upper_limit and y<lower_limit and x>right_limit:
+                if actions.get('left')==False:
+                    pyautogui.press('left')
+                    actions['left']=True
                     print(actions)
 
 
